@@ -2,7 +2,6 @@ package awsTrafficGenerator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -11,7 +10,6 @@ import constants.connectionConstants;
 
 public class AWSClient extends Thread{
 	private Socket socket;
-	private InputStream inputStream;
 	private BufferedReader buff;
 	
 	public AWSClient() {
@@ -37,7 +35,8 @@ public class AWSClient extends Thread{
 			e.printStackTrace();
 		}
 		try {
-			buff.readLine();
+			String reply = buff.readLine();
+			System.out.println(reply);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
