@@ -19,6 +19,8 @@ public class AWSClient extends Thread{
 	public void run() {
 		
 		super.run();
+		RttTimer timer = new RttTimer();
+		timer.start();
 		try {
 			socket = new Socket(connectionConstants.host, connectionConstants.port);
 		} catch (UnknownHostException e) {
@@ -36,7 +38,8 @@ public class AWSClient extends Thread{
 		}
 		try {
 			String reply = buff.readLine();
-			System.out.println(reply);
+			timer.stop();
+			System.out.println(reply + ": RTT = " + timer);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
