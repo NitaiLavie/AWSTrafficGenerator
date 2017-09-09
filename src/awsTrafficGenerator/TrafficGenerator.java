@@ -1,9 +1,5 @@
 package awsTrafficGenerator;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.Socket;
 import java.util.Random;
 
 import constants.connectionConstants;
@@ -16,21 +12,10 @@ public class TrafficGenerator {
 		double sendingRate = 1;
 		Long sleepTime;
 		
-		try {
-			Socket socket = new Socket(connectionConstants.host, connectionConstants.configPort);
-			BufferedWriter buf = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-			buf.write(Integer.toString(connectionConstants.serverIterations) + "\n");
-			buf.flush();
-			buf.close();
-			socket.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		while(true) {
-			sleepTime = Math.round(100*getExpRandom(sleepy, sendingRate));
-			Thread.sleep(sleepTime);
+			sleepTime = Math.round(getSleepMultiplier()*getExpRandom(sleepy, sendingRate));
+			//sleepTime = Math.round(connectionConstants.sleepMulitplier*getExpRandom(sleepy, sendingRate));
+			Thread.sleep(sleepTime); 
 			System.out.println("slept for: " + sleepTime+ "\n" );
 			new AWSClient().start();
 		}
@@ -38,6 +23,20 @@ public class TrafficGenerator {
 	
     public static double getExpRandom(Random r, double p) { 
         return -Math.log((1-r.nextDouble())) / p; 
+    }
+    
+    public static double getSleepMultiplier() {
+    	long currentTime = System.currentTimeMillis() - connectionConstants.startTime;
+    	return	(
+    				Math.tanh(
+    					2*Math.E*(
+    						(currentTime/connectionConstants.sleepMulitplierShiftPeriod)
+    						- 0.5
+    					)
+    				)
+    				* (connectionConstants.sleepMulitplierEnd - connectionConstants.sleepMulitplierStart)/2
+    			)
+				+ (connectionConstants.sleepMulitplierEnd + connectionConstants.sleepMulitplierStart)/2;
     }
 	
 }
