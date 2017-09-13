@@ -13,8 +13,9 @@ public class TrafficGenerator {
 		Long sleepTime;
 		
 		while(true) {
-			sleepTime = Math.round(getSleepMultiplier()*getExpRandom(sleepy, sendingRate));
+			//sleepTime = Math.round(getSleepMultiplier()*getExpRandom(sleepy, sendingRate));
 			//sleepTime = Math.round(connectionConstants.sleepMulitplier*getExpRandom(sleepy, sendingRate));
+			sleepTime = (long) connectionConstants.sleepMulitplier;
 			Thread.sleep(sleepTime); 
 			System.out.println("slept for: " + sleepTime+ "\n" );
 			new AWSClient().start();
@@ -30,7 +31,7 @@ public class TrafficGenerator {
     	return	(
     				Math.tanh(
     					2*Math.E*(
-    						(currentTime/connectionConstants.sleepMulitplierShiftPeriod)
+    						(currentTime/(Math.E*connectionConstants.sleepMulitplierShiftPeriod))
     						- 0.5
     					)
     				)
