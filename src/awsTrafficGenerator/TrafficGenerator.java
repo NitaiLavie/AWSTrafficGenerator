@@ -13,9 +13,12 @@ public class TrafficGenerator {
 		Long sleepTime;
 		
 		while(true) {
-			//sleepTime = Math.round(getSleepMultiplier()*getExpRandom(sleepy, sendingRate));
+			//sleepTime = Math.round(getTanhSleepMultiplier()*getExpRandom(sleepy, sendingRate));
+			//sleepTime = Math.round(getLinearSleepMultiplier()*getExpRandom(sleepy, sendingRate));
 			//sleepTime = Math.round(connectionConstants.sleepMulitplier*getExpRandom(sleepy, sendingRate));
+			//sleepTime = (long) getLinearSleepMultiplier();
 			sleepTime = (long) connectionConstants.sleepMulitplier;
+			
 			Thread.sleep(sleepTime); 
 			System.out.println("slept for: " + sleepTime+ "\n" );
 			new AWSClient().start();
@@ -26,7 +29,7 @@ public class TrafficGenerator {
         return -Math.log((1-r.nextDouble())) / p; 
     }
     
-    public static double getSleepMultiplier() {
+    public static double getTanhSleepMultiplier() {
     	long currentTime = System.currentTimeMillis() - connectionConstants.startTime;
     	return	(
     				Math.tanh(
@@ -39,5 +42,12 @@ public class TrafficGenerator {
     			)
 				+ (connectionConstants.sleepMulitplierEnd + connectionConstants.sleepMulitplierStart)/2;
     }
-	
+    
+    public static double getLinearSleepMultiplier() {
+    	long currentTime = System.currentTimeMillis() - connectionConstants.startTime;
+    	return (
+    		(connectionConstants.sleepMulitplierEnd - connectionConstants.sleepMulitplierStart)
+    		/ (double) connectionConstants.sleepMulitplierShiftPeriod
+    	) * currentTime + connectionConstants.sleepMulitplierStart;
+    }
 }

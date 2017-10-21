@@ -31,6 +31,7 @@ public class AWSClient extends Thread{
 			buffWrite.write(connectionConstants.timeout+"\n"); // timeout in seconds
 			buffWrite.write(connectionConstants.iterations+"\n"); // number of iterations
 			buffWrite.write(connectionConstants.update_interval+"\n"); // what is the metric update interval in millis
+			buffWrite.write(connectionConstants.limit+"\n"); // what is the thread count limit
 			buffWrite.flush();
 			String reply = buffRead.readLine(); // waiting for an answer from the server
 			timer.stop();
