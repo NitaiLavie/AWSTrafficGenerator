@@ -9,14 +9,18 @@ public class connectionConstants {
 	
 	public static final int cores = 1;
 	public static final int timeout = 10; // in sec
-	//public static final int iterations = (int) 6.25e6; // this is a good load
+	//public static final int iterations = 0; // for sending times calculations
 	public static final int iterations = (int) 6e6; // this is a good load
 	
-	public static final int sleepMulitplier = 333;
+	public static final int sleepMulitplier = 1000;
 	
+	public static final int sleepMulitplierOneMachineLoad = 500;
 	public static final int sleepMulitplierStart = 800;
 	public static final int sleepMulitplierEnd = 100;
 	public static final int sleepMulitplierShiftPeriod = 960000; // in millis
+	public static final int sleepMultiplierMachineOpenTime = 120000;
+	public static final int sleepMultiplierMaxMachines = 6;
+	
 	public static long startTime = System.currentTimeMillis();
 	
 	public static int update_interval = 5000; // in millis

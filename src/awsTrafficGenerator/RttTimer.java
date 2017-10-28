@@ -9,10 +9,10 @@ public class RttTimer {
      * measures time passed between start and stop in milliseconds in milliseconds
      * when start measuring sets time to 0
      */
-    long mStartTime;
-    long mStopTime;
-    long mTime;
-
+    private long mStartTime;
+    private long mStopTime;
+    private long mTime;
+   
     public RttTimer(){
         mStartTime = 0;
         mStopTime = 0;
