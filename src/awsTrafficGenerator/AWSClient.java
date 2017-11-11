@@ -14,11 +14,13 @@ public class AWSClient extends Thread{
 	private BufferedReader buffRead = null;
 	private BufferedWriter buffWrite = null;
 	private int clientNum;
+	private Long iterations;
 	private LogWriter logWriter;
 	
-	public AWSClient(LogWriter writer, int num) {
+	public AWSClient(LogWriter writer, int num, Long handlingTime) {
 		clientNum = num;
 		logWriter = writer;
+		iterations = handlingTime;
 	}
 	@Override
 	public void run() {
@@ -32,7 +34,7 @@ public class AWSClient extends Thread{
 			timer.start();
 			buffWrite.write(connectionConstants.cores+"\n"); // amount of cores to stress
 			buffWrite.write(connectionConstants.timeout+"\n"); // seconds to timeout the stress
-			buffWrite.write(connectionConstants.iterations+"\n"); // number of iterations
+			buffWrite.write(iterations+"\n"); // number of iterations
 			buffWrite.write(connectionConstants.update_interval+"\n"); // what is the metric update interval in millis
 			buffWrite.write(connectionConstants.limit+"\n"); // what is the thread count limit
 			long startTime = System.currentTimeMillis();

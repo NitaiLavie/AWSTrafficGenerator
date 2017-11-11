@@ -14,7 +14,8 @@ public class connectionConstants {
 	
 	public static final int sleepMulitplier = 1000;
 	
-	public static final int sleepMulitplierOneMachineLoad = 500;
+	public static final int sleepMulitplierOneMachineLoad = 845; // 948.4864864865 RTT avg - 212.4680851064 net time avg
+
 	public static final int sleepMulitplierStart = 800;
 	public static final int sleepMulitplierEnd = 100;
 	public static final int sleepMulitplierShiftPeriod = 960000; // in millis

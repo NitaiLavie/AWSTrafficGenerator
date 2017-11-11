@@ -9,8 +9,11 @@ public class TrafficGenerator {
 	public static void main(String[] args ) throws InterruptedException {
 		// TODO Auto-generated method stub
 		Random sleepy = new Random();
-		double sendingRate = 3/connectionConstants.sleepMulitplierOneMachineLoad;
+		Random workRand = new Random();
+		double sendingRate = 3/(double)connectionConstants.sleepMulitplierOneMachineLoad;
+		double handlingRate = 1/(double)connectionConstants.iterations;
 		Long sleepTime;
+		Long handlingTime;
 		int counter = 1;
 		LogWriter logWriter = new LogWriter("TrafficGenerator."+System.currentTimeMillis()+".log");
 		logWriter.write("client_num,time_stamp,event,server_id,avg_thread_count\n");
@@ -23,10 +26,11 @@ public class TrafficGenerator {
 			//sleepTime = (long) getLinearSleepMultiplier();
 			//sleepTime = (long) getLinearFrequencySleepMultiplier();
 			//sleepTime = (long) connectionConstants.sleepMulitplier;
+			handlingTime = Math.round(getExpRandom(workRand, handlingRate));
 			
 			Thread.sleep(sleepTime); 
 			System.out.println("slept for: " + sleepTime+ "\n" );
-			new AWSClient(logWriter, counter++).start();
+			new AWSClient(logWriter, counter++, handlingTime).start();
 		}
 	}
 	

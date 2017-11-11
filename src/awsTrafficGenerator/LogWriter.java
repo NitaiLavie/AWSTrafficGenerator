@@ -33,6 +33,7 @@ public class LogWriter {
 		mLock.lock();
 		try {
 			mLogWriter.write(log + "\n");
+			mLogWriter.flush();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
